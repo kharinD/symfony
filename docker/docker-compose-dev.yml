@@ -1,0 +1,60 @@
+version: '3.7'
+
+volumes:
+  symfony_postgres_data:
+
+networks:
+  symfony:
+
+services:
+  postgres:
+    image: postgres:11
+    command: postgres -c config_file=/etc/postgresql.conf
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - ${WORK_DIR}/docker/postgres/postgresql.conf:/etc/postgresql.conf
+      - symfony_postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - symfony
+    container_name: symfony-postgres
+
+  php:
+    build:
+      context: php
+    depends_on:
+      - postgres
+    command: php-fpm
+    ipc: host
+    environment:
+      COMPOSER_CACHE_DIR: /tmp/cache
+    volumes:
+      - $HOME/composer/cache:/tmp/cache
+      - ${WORK_DIR}/docker/php/php.ini:/etc/php7/php.ini
+      - ${WORK_DIR}:/var/www/app
+    restart: always
+    working_dir: /var/www/app/skeleton
+    networks:
+      - symfony
+    container_name: symfony-app
+
+  nginx:
+    image: nginx
+    depends_on:
+      - php
+    volumes:
+      - ${WORK_DIR}:/var/www/app
+      - ${WORK_DIR}/docker/nginx/conf.d/${APP_ENV}:/etc/nginx/conf.d
+      - ${WORK_DIR}/docker/nginx/common:/etc/nginx/common
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    networks:
+      - symfony
+    container_name: symfony-nginx

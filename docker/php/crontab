@@ -1,0 +1,2 @@
+#0 1 * * * /usr/bin/lockrun --lockfile=/tmp/api_clear.lockrun -- php /usr/src/app/yii api/clear
+0 1 * * * php /home/app/yii google-merchant-xml
