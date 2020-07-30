@@ -50,11 +50,19 @@ update() {
         symfony-app composer update
 }
 
+migrate() {
+        docker exec \
+        -it \
+        -e COMPOSER_CACHE_DIR=/tmp/cache \
+        symfony-app symfony console doctrine:migrations:migrate
+}
+
 if [[ -z ${ACTION} ]]
   then
     down
     up
     install
+    migrate
 fi
 
 case ${ACTION} in
@@ -72,5 +80,8 @@ case ${ACTION} in
           exit;;
      update)
           update
+          exit;;
+     migrate)
+          migrate
           exit;;
 esac
