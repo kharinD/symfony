@@ -7,6 +7,7 @@ then
 fi
 
 source .env
+
 ACTION=$1
 
 if ! [[ -x "$(command -v docker)" ]]
@@ -24,15 +25,15 @@ fi
 pull() {
     mkdir -p "${HOME}"/composer/cache && chmod 777 "${HOME}"/composer/cache || (echo "Unable to create composer cache dir in ${HOME}" && exit 1);
 
-    docker-compose -f docker/docker-compose-${APP_ENV}.yml pull
+    docker-compose -f docker-compose-${APP_ENV}.yml pull
 }
 
 down() {
-    docker-compose -f docker/docker-compose-${APP_ENV}.yml down --remove-orphans
+    docker-compose -f docker-compose-${APP_ENV}.yml down --remove-orphans
 }
 
 up() {
-    docker-compose -f docker/docker-compose-${APP_ENV}.yml up --detach
+    docker-compose -f docker-compose-${APP_ENV}.yml up --detach
 }
 
 install() {

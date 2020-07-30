@@ -1,24 +1,16 @@
-.env
 
-# phpstorm project files
-.idea
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
 
-# windows thumbnail cache
-Thumbs.db
-
-# composer vendor dir
-skeleton/vendor
-
-# composer itself is not needed
-composer.phar
-
-# Mac DS_Store Files
-.DS_Store
-
-# phpunit itself is not needed
-phpunit.phar
-# local phpunit config
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
 /phpunit.xml
-
-# vagrant runtime
-/.vagrant
+###< symfony/phpunit-bridge ###

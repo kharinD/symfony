@@ -38,7 +38,7 @@ services:
       - ${WORK_DIR}/docker/php/php.ini:/etc/php7/php.ini
       - ${WORK_DIR}:/var/www/app
     restart: always
-    working_dir: /var/www/app/skeleton
+    working_dir: /var/www/app
     networks:
       - symfony
     container_name: symfony-app

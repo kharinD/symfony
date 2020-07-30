@@ -84,6 +84,7 @@ RUN docker-php-ext-configure zip \
 RUN mkdir ./lockrun \
     && cd ./lockrun \
     && wget http://www.unixwiz.net/tools/lockrun.c \
+    && curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony/bin/symfony /usr/local/bin/symfony \
     && gcc lockrun.c -o lockrun \
     && cp lockrun /usr/bin/ \
